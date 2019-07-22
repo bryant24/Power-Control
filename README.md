@@ -7,11 +7,14 @@
 - 设置计划开关机任务
 
 # 如何使用
+## 1、使用源码
 - 克隆源码到项目目录(如app)
 - 执行npm install 安装依赖
 - Windows用户可以直接使用nw.exe app/运行项目，如要打包程序，具体参照[MW.js文档](http://docs.nwjs.io/en/latest/For%20Users/Package%20and%20Distribute/)
 - 在被控机上安装daemon api服务并设置为自动启动,[Power-Control-Daemon仓库](https://github.com/bryant24/Control-Power-daemon)
 
+## 2、使用安装包
+Windows[下载安装包](https://github.com/bryant24/Power-Control/releases)
 
 # 调试
 windows用户开启dev控制台调试请使用NW.js的[sdk版本](https://nwjs.io/downloads/)运行
