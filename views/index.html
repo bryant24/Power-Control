@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../styles/bootstrap.min.css" crossorigin="anonymous">
+    <link href="../styles/dashboard.css" rel="stylesheet">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <span data-feather="home"></span>电脑列表<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="plan.html">
+                            <span data-feather="file"></span>
+                            计划任务
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <h2>电脑列表</h2>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addModal">添加电脑
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#shutdownModal">一键关机
+            </button>
+            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#startupModal">一键开机
+            </button>
+            <button type="button" class="btn btn-info btn-sm" onclick="refreshHost()">刷新状态</button>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm table-hover">
+                    <thead>
+                    <tr>
+                        <th>电脑名</th>
+                        <th>MAC地址</th>
+                        <th>IP</th>
+                        <th>状态
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="hostlist">
+                </table>
+            </div>
+        </main>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">添加电脑</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="hostname">名称</label>
+                        <input type="text" class="form-control" id="hostname" placeholder="电脑名称">
+                        <small id="hostnameHelp" class="form-text text-muted">填写电脑名称,如张三</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="macaddr">Mac地址</label>
+                        <input type="text" class="form-control" id="macaddr" placeholder="电脑的Mac地址">
+                        <small id="macaddrHelp" class="form-text text-muted">填写电脑mac地址,如xx-xx-xx-xx-xx-xx</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="ipaddr">Ip地址</label>
+                        <input type="text" class="form-control" id="ipaddr" placeholder="电脑的Ip地址">
+                        <small id="ipaddrHelp" class="form-text text-muted">填写ip地址,如192.168.1.10</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" onclick="AddHost()" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="shutdownModal" tabindex="-1" role="dialog" aria-labelledby="shutdownModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="shutdownModalLabel">提示</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                此操作将强制关闭所有电脑电源，是否继续？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="OneKeyShutdown()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="startupModal" tabindex="-1" role="dialog" aria-labelledby="startupModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="startupModalLabel">提示</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                此操作将自动开启所有电脑电源，是否继续？
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="OneKeyStartup()">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script src="../js/popper.min.js" crossorigin="anonymous"></script>
+<script src="../js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="../include/hosts.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
