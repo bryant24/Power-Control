@@ -31,6 +31,7 @@ windows用户开启dev控制台调试请使用NW.js的[sdk版本](https://nwjs.i
 
 # TODOs
 - 多语言版
+- 使用其他存储方式
 - 支持linux/mac系统的远程启动
 - 主从通信加密
 - 远程手机app支持开关机
